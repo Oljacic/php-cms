@@ -13,15 +13,18 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
+                    <?php
+                        $query = "SELECT * FROM categories";
+                        $select_all_categories = mysqli_query($connection, $query);
+
+                        while ($row = mysqli_fetch_assoc($select_all_categories)) {
+                            $category_title = $row['category_title'];
+                            echo "<li><a href=\"#\">{$category_title}</a></li>";
+                        }
+                    ?>
+<!--                <li><a href="#">About</a></li>-->
+<!--                <li><a href="#">Services</a></li>-->
+<!--                <li><a href="#">Contact</a></li>-->
             </ul>
         </div>
         <!-- /.navbar-collapse -->

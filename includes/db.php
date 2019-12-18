@@ -12,7 +12,3 @@ foreach ($db_info as $key => $value) {
 }
 
 $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
-
-if($connection) {
-    echo 'We are connected!';
-}

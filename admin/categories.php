@@ -38,13 +38,20 @@
 
                             <form action="" method="post">
                                 <div class="form-group">
-                                    <label for="categiry_title">Add Category</label>
+                                    <label for="category_title">Add Category</label>
                                     <input class="form-control" type="text" name="category_title">
                                 </div>
                                 <div class="form-group">
                                     <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
                                 </div>
                             </form>
+                            <?php
+                                if(isset($_GET['edit'])) {
+                                    $id_ready_for_update = $_GET['edit'];
+
+                                    include "includes/update_categories.php";
+                                }
+                            ?>
                         </div>
                         <div class="col-xs-6">
                             <table class="table table-bordered table-hover">
@@ -52,6 +59,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Category Title</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,7 +73,10 @@
                                               $table = "<tr>";
                                               $table.= "<td>{$category_id}</td>";
                                               $table.= "<td>{$category_title}</td>";
-                                              $table.= "<td><a href='categories.php?delete={$category_id}'>Delete</a></td>";
+                                              $table.= "<td>
+                                                            <a href='categories.php?delete={$category_id}'>Delete</a> --- 
+                                                            <a href='categories.php?edit={$category_id}'>Edit</a>
+                                                        </td>";
                                               $table.= "</tr>";
                                               echo $table;
                                           }

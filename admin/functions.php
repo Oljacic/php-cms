@@ -62,7 +62,7 @@ function deleteCategories() {
         $query = "DELETE FROM categories ";
         $query.= "WHERE id = {$id_ready_for_delete}";
 
-        $delete_category = mysqli_query($connection, $query);
+        mysqli_query($connection, $query);
 
         header("Location: categories.php");
     }

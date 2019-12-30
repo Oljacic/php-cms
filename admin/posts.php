@@ -11,7 +11,7 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Welcome to Admin<small>Author</small></h1>
+                        <h1 class="page-header">Welcome to Admin <small>Author</small></h1>
                         <?php
                             if(isset($_GET['source'])) {
                                 $source = $_GET['source'];
@@ -20,8 +20,8 @@
                             }
 
                             switch ($source) {
-                                case '34':
-                                    echo 'Nice';
+                                case 'add_post':
+                                    include "includes/add_post.php";
                                     break;
                                 case '100':
                                     echo 'Nice100';

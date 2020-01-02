@@ -14,6 +14,14 @@
         $comment_count = 4;
 
         move_uploaded_file($image_tmp, "../images/$image");
+
+        $query = "INSERT INTO posts (category_id, title, author, date, image, content, tags, comment_count, status) ";
+        $query.= "VALUES({$category_id},'{$title}','{$author}',now(),'{$image}','{$content}','{$tags}','{$comment_count}','{$status}')";
+
+        $add_post = mysqli_query($connection, $query);
+
+        handlingMySqlError($add_post);
+
     }
 ?>
 

@@ -67,3 +67,13 @@ function deleteCategories() {
         header("Location: categories.php");
     }
 }
+
+function handlingMySqlError($execute) {
+
+    global $connection;
+
+    if(!$execute) {
+        die('QUERY FAILED '.mysqli_error($connection));
+    }
+
+}

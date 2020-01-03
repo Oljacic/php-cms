@@ -24,19 +24,19 @@
         ?>
 
         <?php // Update  Category
-        if(isset($_POST['edit_category_title'])) {
-            $title_ready_for_update = $_POST['edit_category_title'];
+            if(isset($_POST['edit_category_title'])) {
+                $title_ready_for_update = $_POST['edit_category_title'];
 
-            $query = "UPDATE categories ";
-            $query.= "SET category_title = '{$title_ready_for_update}' ";
-            $query.= "WHERE id = {$id_ready_for_update}";
+                $query = "UPDATE categories ";
+                $query.= "SET category_title = '{$title_ready_for_update}' ";
+                $query.= "WHERE id = {$title_ready_for_update}";
 
-            $update_category = mysqli_query($connection, $query);
+                $update_category = mysqli_query($connection, $query);
 
-            if(!$update_category) {
-                die('QUERY FAILED' . mysqli_error($connection));
+                if(!$update_category) {
+                    die('QUERY FAILED' . mysqli_error($connection));
+                }
             }
-        }
         ?>
     </div>
     <div class="form-group">

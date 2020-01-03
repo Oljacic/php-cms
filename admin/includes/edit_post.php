@@ -1,53 +1,75 @@
-<?php
-//if(isset($_POST['edit_post'])) {
-//    $title = $_POST['title'];
-//    $author = $_POST['author'];
-//    $category_id = $_POST['category_id'];
-//    $status = $_POST['status'];
-//
-//    $image = $_FILES['image']['name'];
-//    $image_tmp = $_FILES['image']['tmp_name'];
-//
-//    $tags = $_POST['tags'];
-//    $content = $_POST['content'];
-//    $date = date('d-m-y');
-//    $comment_count = 4;
-//
-//    move_uploaded_file($image_tmp, "../images/$image");
-//
-//    $query = "INSERT INTO posts (category_id, title, author, date, image, content, tags, comment_count, status) ";
-//    $query.= "VALUES({$category_id},'{$title}','{$author}',now(),'{$image}','{$content}','{$tags}','{$comment_count}','{$status}')";
-//
-//    $add_post = mysqli_query($connection, $query);
-//
-//    handlingMySqlError($add_post);
-//
-//}
-?>
-
 <form action="" method="post" enctype="multipart/form-data">
     <?php
+
+        $id = '';
+
         if(isset($_GET['p_id'])) {
-
             $id = $_GET['p_id'];
+        }
 
-            $query = "SELECT * FROM posts ";
+        $query = "SELECT * FROM posts ";
+        $query.= "WHERE id = {$id}";
+
+        $select_data_post = mysqli_query($connection, $query);
+
+        while ($row = mysqli_fetch_assoc($select_data_post)) {
+            $post_id = $row['id'];
+            $post_author = $row['author'];
+            $post_title = $row['title'];
+            $post_content = $row['content'];
+            $post_category_id = $row['category_id'];
+            $post_status = $row['status'];
+            $post_image = $row['image'];
+            $post_tags = $row['tags'];
+            $post_comment_count = $row['comment_count'];
+            $post_date = $row['date'];
+        }
+
+
+
+        if(isset($_POST['submit'])) {
+
+            $title = $_POST['title'];
+            $author = $_POST['author'];
+            $category_id = $_POST['post_category'];
+
+            $status = $_POST['status'];
+
+            $image = $_FILES['image']['name'];
+            $image_tmp = $_FILES['image']['tmp_name'];
+
+            $tags = $_POST['tags'];
+            $content = $_POST['content'];
+
+            move_uploaded_file($image_tmp, "../images/$image");
+
+            if(empty($image)) {
+                $query = "SELECT * FROM posts WHERE id = $id ";
+                $select_image = mysqli_query($connection, $query);
+
+                while ($row = mysqli_fetch_array($select_image)) {
+                    $image = $row['image'];
+                }
+            }
+
+            $query = "UPDATE posts SET ";
+            $query.= "title = '{$title}', ";
+            $query.= "category_id = {$category_id}, ";
+            $query.= "date = now(), ";
+            $query.= "author = '{$author}', ";
+            $query.= "status = '{$status}', ";
+            $query.= "tags = '{$tags}', ";
+            $query.= "content = '{$content}', ";
+            $query.= "image = '{$image}' ";
             $query.= "WHERE id = {$id}";
 
-            $select_data_post = mysqli_query($connection, $query);
+            $edit_post = mysqli_query($connection, $query);
 
-            while ($row = mysqli_fetch_assoc($select_data_post)) {
-                $post_id = $row['id'];
-                $post_author = $row['author'];
-                $post_title = $row['title'];
-                $post_content = $row['content'];
-                $post_category_id = $row['category_id'];
-                $post_status = $row['status'];
-                $post_image = $row['image'];
-                $post_tags = $row['tags'];
-                $post_comment_count = $row['comment_count'];
-                $post_date = $row['date'];
-            }
+            handlingMySqlError($edit_post);
+
+            header('Location:'.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+            die;
+
         }
     ?>
     <div class="form-group">
@@ -69,8 +91,7 @@
                     $category_id = $row['id'];
                     $category_title = $row['category_title'];
 
-
-                echo "<option value=\"$category_id\">$category_title</option>";
+                    echo "<option value=\"$category_id\">$category_title</option>";
 
                 }
             ?>
@@ -99,6 +120,6 @@
         <textarea class="form-control" name="content" id="" cols="30" rows="10"><?php echo $post_content; ?></textarea>
     </div>
     <div class="form-group">
-        <input class="btn btn-primary" type="submit" name="edit_post" value="Edit Post">
+        <input class="btn btn-primary" type="submit" name="submit" value="Edit Post">
     </div>
 </form>

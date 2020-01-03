@@ -64,7 +64,7 @@ function deleteCategories() {
 
         mysqli_query($connection, $query);
 
-        header("Location: categories.php");
+        header('Location: '.$_SERVER['PHP_SELF']);
     }
 }
 

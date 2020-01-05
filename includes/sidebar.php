@@ -26,8 +26,9 @@
                 <ul class="list-unstyled">
                     <?php
                         while ($row = mysqli_fetch_assoc($select_categories_sidebar)) {
+                            $category_id = $row['id'];
                             $category_title = $row['category_title'];
-                            echo "<li><a href=\"#\">{$category_title}</a></li>";
+                            echo "<li><a href='category.php?category={$category_id}'>{$category_title}</a></li>";
                         }
                     ?>
                 </ul>

@@ -9,7 +9,15 @@
         <div class="col-md-8">
             <h1 class="page-header">Page Heading<small>Secondary Text</small></h1>
             <?php
-                $query = "SELECT * FROM posts";
+
+                $category_id = '';
+
+                if(isset($_GET['category'])) {
+                    $category_id = $_GET['category'];
+                }
+
+                $query = "SELECT * FROM posts ";
+                $query.= "WHERE category_id = $category_id";
                 $select_all_posts = mysqli_query($connection, $query);
 
                 while ($row = mysqli_fetch_assoc($select_all_posts)) :

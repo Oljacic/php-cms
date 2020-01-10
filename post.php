@@ -43,6 +43,7 @@
                 <!-- Blog Comments -->
                 <?php 
                     if(isset($_POST['create_comment'])) {
+                        $post_id = $_GET['post_id'];
                         $author = $_POST['author'];
                         $email = $_POST['email'];
                         $comment = $_POST['comment'];
@@ -60,7 +61,7 @@
                 <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
-                    <form role="form" method="post">
+                    <form role="form" action="" method="post">
                         <div class="form-group">
                             <label for="author">Author</label>
                             <input type="text" class="form-control" name="author">

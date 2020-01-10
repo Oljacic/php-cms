@@ -49,27 +49,46 @@
 
                 $table.= "<td>{$comment_email}</td>";
                 $table.= "<td>{$comment_status}</td>";
-                $table.= "<td>Some text</td>";
+                
+                $query_post = "SELECT * FROM posts ";
+                $query_post.= "WHERE id = $comment_post_id";
+
+                $select_post = mysqli_query($connection, $query_post);
+                handlingMySqlError($select_post);
+                
+                $post_id = '';
+                $post_title = '';
+
+                while($row = mysqli_fetch_assoc($select_post)) {
+                    $post_id = $row['id'];
+                    $post_title = $row['title'];
+                }
+
+                $table.= "<td><a href='../post.php?post_id=$post_id'>{$post_title}<a></td>";
                 $table.= "<td>{$comment_date}</td>";
                 $table.= "<td><a href='posts.php?source=edit_post&p_id={$comment_id}'>Approved</a></td>";
                 $table.= "<td><a href='posts.php?delete_post={$comment_id}'>Unapproved</a></td>";
-                $table.= "<td><a href='posts.php?delete_post={$comment_id}'>Delete</a></td>";
+                $table.= "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
                 $table.= "</tr>";
 
                 echo $table;
             }
         ?>
-        <?php
-            if(isset($_GET['delete_post'])) {
+        <?php 
+            if(isset($_GET['delete'])) {
+                $id_comment = $_GET['delete'];
 
-                $id_ready_for_delete = $_GET['delete_post'];
+                $query = "DELETE FROM comments ";
+                $query.= "WHERE id = $id_comment";
 
-                $query = "DELETE FROM posts ";
-                $query.= "WHERE id = {$id_ready_for_delete}";
+                $delete_comment = mysqli_query($connection, $query);
+                
+                // I have function for this but i wrote this here just to test my knowledge
+                if(!$delete_comment) {
+                    die ('QUERY FAILED: '.mysqli_error($connection));
+                }
 
-                mysqli_query($connection, $query);
-
-                header("Location: posts.php");
+                header("Location: comments.php");
             }
         ?>
         </tbody>

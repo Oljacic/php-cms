@@ -41,15 +41,39 @@
             
             
                 <!-- Blog Comments -->
+                <?php 
+                    if(isset($_POST['create_comment'])) {
+                        $author = $_POST['author'];
+                        $email = $_POST['email'];
+                        $comment = $_POST['comment'];
+                        $status = 'approved';
+                        
+                        $query = "INSERT INTO comments (post_id, author, email, content, status, date) ";
+                        $query.= "VALUES($post_id, '$author', '$email', '$comment', '$status', now())";
+
+                        $add_comment = mysqli_query($connection, $query);
+
+                        handlingMySqlError($add_comment);
+                    }
+                ?>
 
                 <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
-                    <form role="form">
+                    <form role="form" method="post">
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <label for="author">Author</label>
+                            <input type="text" class="form-control" name="author">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Your Comment</label>
+                            <textarea class="form-control" rows="3" name="comment"></textarea>
+                        </div>
+                        <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
 

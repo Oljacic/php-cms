@@ -9,8 +9,8 @@
             <th>Status</th>
             <th>In response to</th>
             <th>Date</th>
-            <th>Approved</th>
-            <th>Unapproved</th>
+            <th>Approve</th>
+            <th>Unapprove</th>
             <th>Delete</th>
         </tr>
         </thead>
@@ -66,8 +66,8 @@
 
                 $table.= "<td><a href='../post.php?post_id=$post_id'>{$post_title}<a></td>";
                 $table.= "<td>{$comment_date}</td>";
-                $table.= "<td><a href='posts.php?source=edit_post&p_id={$comment_id}'>Approved</a></td>";
-                $table.= "<td><a href='posts.php?delete_post={$comment_id}'>Unapproved</a></td>";
+                $table.= "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
+                $table.= "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
                 $table.= "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
                 $table.= "</tr>";
 
@@ -87,6 +87,37 @@
                 if(!$delete_comment) {
                     die ('QUERY FAILED: '.mysqli_error($connection));
                 }
+
+                header("Location: comments.php");
+            }
+        ?>
+
+        <?php
+
+            // Unapproved
+            if(isset($_GET['unapprove'])) {
+                $unapproved_id = $_GET['unapprove'];
+
+                $query = "UPDATE comments SET status = 'unapproved' ";
+                $query.= "WHERE id = $unapproved_id";
+
+                $unapproved_query = mysqli_query($connection, $query);
+
+                handlingMySqlError($unapproved_query);
+
+                header("Location: comments.php");
+            }
+
+            // Approved
+            if(isset($_GET['approve'])) {
+                $approved_id = $_GET['approve'];
+
+                $query = "UPDATE comments SET status = 'approved' ";
+                $query.= "WHERE id = $approved_id";
+
+                $approved_query = mysqli_query($connection, $query);
+
+                handlingMySqlError($approved_query);
 
                 header("Location: comments.php");
             }

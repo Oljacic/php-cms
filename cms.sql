@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2020 at 05:06 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- Generation Time: Jan 12, 2020 at 12:47 AM
+-- Server version: 10.3.15-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -56,9 +56,26 @@ CREATE TABLE `comments` (
   `author` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `status` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'unapproved',
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `post_id`, `author`, `email`, `content`, `status`, `date`) VALUES
+(1, 1, 'Hotina Latina', 'latinahotina@tina.bombina', 'Hey you ;)', 'unapproved', '2020-01-11'),
+(2, 1, 'Normal Guy', 'justnormalguy@serbia.com', 'Hi I am best normal guy you will ever met ;)', 'approved', '2020-01-11'),
+(3, 2, 'Spam', 'spamtilltomorow@spaminjo.com', 'Spam', 'unapproved', '2020-01-11'),
+(4, 2, 'Monica', 'monicafromsilicon@mon.com', 'Hey Very good article for bulding skills.', 'approved', '2020-01-11'),
+(5, 1, 'Test', 'test@test.test', 'test', 'unapproved', '2020-01-11'),
+(6, 1, 'Sprki', 'spamtilltomorow@spaminjo.com', 'sprkinjo', 'unapproved', '2020-01-11'),
+(7, 1, 'Malinka', 'malinedogodine@mail.com', 'Maliine mogu da se svrstaju pod successfull life?', 'unapproved', '2020-01-11'),
+(8, 1, 'Burek', 'burekcic@buki.com', 'Burekcina', 'approved', '2020-01-11'),
+(9, 1, 'Stef', 'support@setinjo.com', 'Stef', 'approved', '2020-01-11'),
+(10, 1, 'Look', 'luk@look.com', 'Ssdada', 'approved', '2020-01-11'),
+(11, 3, 'What', 'test@test.test', 'dsadad', 'unapproved', '2020-01-11');
 
 -- --------------------------------------------------------
 
@@ -84,8 +101,9 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `category_id`, `title`, `author`, `date`, `image`, `content`, `tags`, `comment_count`, `status`) VALUES
-(1, 5, 'Success', 'Stef', '2020-01-05', 'placeholder-success.jpg', 'This content will tell you what to do and what you can get so evreythinh should be ok. ', 'life, success, working on increasing skills', '4', 'published'),
-(2, 1, 'Test Unit', 'Stef', '2020-01-05', 'placeholder.jpg', 'Some content from greatest programer!', 'PHP, master', '4', 'Published');
+(1, 5, 'Success', 'Stef', '2020-01-05', 'placeholder-success.jpg', 'This content will tell you what to do and what you can get so evreythinh should be ok. ', 'life, success, working on increasing skills', '5', 'published'),
+(2, 1, 'Test Unit', 'Stef', '2020-01-05', 'placeholder.jpg', 'Some content from greatest programer!', 'PHP, master', '4', 'published'),
+(3, 1, 'Stef', 'Stef', '2020-01-11', 'placeholder.jpg', 'dasdsadasdsad', 'Succees, Life Goals, Habbit', '1', 'draft');
 
 --
 -- Indexes for dumped tables
@@ -123,13 +141,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

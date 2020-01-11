@@ -55,6 +55,11 @@
 
                         handlingMySqlError($add_comment);
 
+                        $query_count_comment = "UPDATE posts SET comment_count = comment_count + 1 ";
+                        $query_count_comment.= "WHERE id = $post_id";
+
+                        $count_comments = mysqli_query($connection, $query_count_comment);
+
                         header('Location:'.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
                     }
                 ?>

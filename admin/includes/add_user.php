@@ -1,27 +1,28 @@
 <?php
-if(isset($_POST['create_post'])) {
-    $title = $_POST['title'];
-    $author = $_POST['author'];
-    $category_id = $_POST['post_category'];
-    $status = $_POST['status'];
+    if(isset($_POST['create_user'])) {
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
 
-    $image = $_FILES['image']['name'];
-    $image_tmp = $_FILES['image']['tmp_name'];
+//        $image = $_FILES['image']['name'];
+//        $image_tmp = $_FILES['image']['tmp_name'];
 
-    $tags = $_POST['tags'];
-    $content = $_POST['content'];
-    $date = date('d-m-y');
+        $password = $_POST['password'];
+        $role = $_POST['role'];
 
-    move_uploaded_file($image_tmp, "../images/$image");
+//        move_uploaded_file($image_tmp, "../images/$image");
 
-    $query = "INSERT INTO posts (category_id, title, author, date, image, content, tags, status) ";
-    $query.= "VALUES({$category_id},'{$title}','{$author}',now(),'{$image}','{$content}','{$tags}','{$status}')";
+        $query = "INSERT INTO users (username, password, firstname, lastname, email, role) ";
+        $query.= "VALUES('$username', '$password', '$first_name', '$last_name', '$email', '$role')";
 
-    $add_post = mysqli_query($connection, $query);
+        $add_user = mysqli_query($connection, $query);
 
-    handlingMySqlError($add_post);
+        handlingMySqlError($add_user);
 
-}
+        header("Location: users.php");
+
+    }
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -41,19 +42,24 @@ if(isset($_POST['create_post'])) {
         <label for="email">Add Email</label>
         <input type="text" class="form-control" name="email">
     </div>
+<!--    <div class="form-group">-->
+<!--        <label for="user_image">Add Image</label>-->
+<!--        <input type="file" name="user_image">-->
+<!--    </div>-->
     <div class="form-group">
-        <label for="user_image">Add Image</label>
-        <input type="file" name="user_image">
+        <label for="password">Add Password</label>
+        <input type="text" class="form-control" name="password">
     </div>
     <div class="form-group">
-        <label for="tags">Post Tags</label>
-        <input type="text" class="form-control" name="tags">
+        <label for="role">Chose Role</label>
+        <br>
+        <select name="role" id="role">
+            <option value="subscriber">Chose Option</option>
+            <option value="admin">Admin</option>
+            <option value="subscriber">Subscriber</option>
+        </select>
     </div>
     <div class="form-group">
-        <label for="content">Post Content</label>
-        <textarea class="form-control" name="content" id="" cols="30" rows="10"></textarea>
-    </div>
-    <div class="form-group">
-        <input class="btn btn-primary" type="submit" name="create_post" value="Publish Post">
+        <input class="btn btn-primary" type="submit" name="create_user" value="Add User">
     </div>
 </form>

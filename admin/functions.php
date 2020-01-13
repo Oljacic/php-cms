@@ -77,3 +77,17 @@ function handlingMySqlError($execute) {
     }
 
 }
+
+function changeUserRoles($id, $new_role) {
+
+    global $connection;
+
+    $query = "UPDATE users SET role = '{$new_role}' ";
+    $query.= "WHERE id = {$id}";
+
+    $change_role = mysqli_query($connection, $query);
+
+    handlingMySqlError($change_role);
+
+    header("Location: users.php");
+}

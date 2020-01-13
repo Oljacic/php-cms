@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2020 at 12:47 AM
+-- Generation Time: Jan 13, 2020 at 10:44 AM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -105,6 +105,33 @@ INSERT INTO `posts` (`id`, `category_id`, `title`, `author`, `date`, `image`, `c
 (2, 1, 'Test Unit', 'Stef', '2020-01-05', 'placeholder.jpg', 'Some content from greatest programer!', 'PHP, master', '4', 'published'),
 (3, 1, 'Stef', 'Stef', '2020-01-11', 'placeholder.jpg', 'dasdsadasdsad', 'Succees, Life Goals, Habbit', '1', 'draft');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(3) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `user_image` text NOT NULL,
+  `role` varchar(255) NOT NULL DEFAULT 'admin',
+  `rand_salt` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `email`, `user_image`, `role`, `rand_salt`) VALUES
+(1, 'Miko', '123', 'Miko', 'Mikovic', 'mikovic@mail.com', '', 'subscriber', ''),
+(3, 'Nensi', 'lubav', 'Nena', 'Nena', 'nensi94@yahoo.com', '', 'admin', ''),
+(4, 'test1', 'test1', 'test1', 'test1', 'test1@test.test', '', 'subscriber', '');
+
 --
 -- Indexes for dumped tables
 --
@@ -128,6 +155,12 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -148,6 +181,12 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `posts`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

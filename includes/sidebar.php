@@ -13,6 +13,23 @@
         <!-- /.input-group -->
     </div>
 
+    <!-- Login -->
+    <div class="well">
+        <h4>Login</h4>
+        <form action="includes/login.php" method="post">
+            <div class="form-group">
+                <input name="username" type="text" class="form-control" placeholder="Enter username">
+            </div>
+            <div class="input-group">
+                <input name="password" type="password" class="form-control" placeholder="Enter password">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" name="login" type="submit"><span>Submit</span></button>
+                </span>
+            </div>
+        </form><!-- search-from -->
+        <!-- /.input-group -->
+    </div>
+
     <?php
         $query = "SELECT * FROM categories";
         $select_categories_sidebar = mysqli_query($connection, $query);

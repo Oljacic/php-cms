@@ -1,4 +1,17 @@
-<?php ob_start(); ?>
+}<?php ob_start(); ?>
+<?php session_start(); ?>
+<?php
+    if(!isset($_SESSION['role'])) {
+        header('Location: ../index.php');
+    }
+    // } else {
+        // $role = $_SESSION['role'];
+
+        // if($role !== 'admin') {
+            // header('Location: ../index.php');
+        // }
+    // }
+?>
 <?php include "../includes/db.php"; ?>
 <?php include "functions.php"; ?>
 <!DOCTYPE html>

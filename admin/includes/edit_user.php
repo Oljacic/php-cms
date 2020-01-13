@@ -2,23 +2,22 @@
     $id = '';
     if(isset($_GET['user_id'])) {
         $id = $_GET['user_id'];
+
+        $query = "SELECT * FROM users ";
+        $query.= "WHERE id = $id";
+        $select_users = mysqli_query($connection, $query);
+        handlingMySqlError($select_users);
+
+        while ($row = mysqli_fetch_assoc($select_users)) {
+            $user_first_name = $row['firstname'];
+            $user_last_name = $row['lastname'];
+            $user_username = $row['username'];
+            $user_password = $row['password'];
+            $user_email = $row['email'];
+            $user_role = $row['role'];
+        }
+
     }
-
-    $query = "SELECT * FROM users ";
-    $query.= "WHERE id = $id";
-    $select_users = mysqli_query($connection, $query);
-    handlingMySqlError($select_users);
-
-    while ($row = mysqli_fetch_assoc($select_users)) {
-        $user_first_name = $row['firstname'];
-        $user_last_name = $row['lastname'];
-        $user_username = $row['username'];
-        $user_password = $row['password'];
-        $user_email = $row['email'];
-        $user_role = $row['role'];
-    }
-
-
 
     if(isset($_POST['edit_user'])) {
         $first_name = $_POST['first_name'];
@@ -76,27 +75,20 @@
     <!--    </div>-->
     <div class="form-group">
         <label for="password">Edit Password</label>
-        <input type="text" class="form-control" name="password" value="<?php echo $user_password; ?>">
+        <input type="password" class="form-control" name="password" value="<?php echo $user_password; ?>">
     </div>
     <div class="form-group">
         <label for="role">Chose Role</label>
         <br>
         <select name="role" id="role">
-            <option value="<?php echo $user_role; ?>">Chose Option</option>
-            <option value="admin">Admin</option>
-            <option value="subscriber">Subscriber</option>
-<!--            --><?php
-//                $query = "SELECT DISTINCT role FROM users"; //maybe solution
-//
-//                $make_options = mysqli_query($connection, $query);
-//                handlingMySqlError($make_options);
-//
-//                while ($row = mysqli_fetch_assoc($make_options)) {
-//                    var_dump($row);
-//                    $role = $row['role'];
-//                    echo "<option value='$role'>".ucfirst($role)."</option>";
-//                }
-//            ?>
+            <option value="<?php echo $user_role; ?>"><?php echo ucfirst($user_role); ?></option>
+            <?php
+                if($user_role == 'admin') {
+                    echo "<option value='subscriber'>Subscriber</option>";
+                } elseif ($user_role == 'subscriber') {
+                    echo "<option value='admin'>Admin</option>";
+                }
+            ?>
         </select>
     </div>
     <div class="form-group">

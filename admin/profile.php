@@ -62,7 +62,6 @@ if (isset($_SESSION['username'])) {
 
                         handlingMySqlError($edit_user);
 
-                        unset($_SESSION);
                         header("Location: profile.php");
                     }
                     ?>

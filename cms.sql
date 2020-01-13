@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2020 at 10:44 AM
--- Server version: 10.3.15-MariaDB
--- PHP Version: 7.3.6
+-- Generation Time: Jan 13, 2020 at 04:35 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.2.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -129,8 +129,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `email`, `user_image`, `role`, `rand_salt`) VALUES
 (1, 'Miko', '123', 'Miko', 'Mikovic', 'mikovic@mail.com', '', 'subscriber', ''),
-(3, 'Nensi', 'lubav', 'Nena', 'Nena', 'nensi94@yahoo.com', '', 'admin', ''),
-(4, 'test1', 'test1', 'test1', 'test1', 'test1@test.test', '', 'subscriber', '');
+(3, 'Nensi', 'lubav', 'Nena', 'Nena', 'nensi94@test.com', '', 'admin', ''),
+(4, 'test1', 'test1', 'test1', 'test1', 'test1@test.test', '', 'subscriber', ''),
+(7, 'makiss', '123', 'Makas', 'Zvaka', 'maki@maka.com', '', 'admin', '');
 
 --
 -- Indexes for dumped tables
@@ -186,7 +187,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

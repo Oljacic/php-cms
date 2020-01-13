@@ -9,6 +9,10 @@
             <th>Last Name</th>
 <!--            <th>Image</th>-->
             <th>Role</th>
+            <th>Change Role to:</th>
+            <th>Change Role to:</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -52,28 +56,42 @@
 //            $table.= "<td>{$comment_date}</td>";
 //            $table.= "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
 //            $table.= "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
-//            $table.= "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
+
+            $table.= "<td><a href='users.php?change_role_admin={$user_id}&role=admin'>Admin</a></td>";
+            $table.= "<td><a href='users.php?change_role_sub={$user_id}&role=subscriber'>Subscriber</a></td>";
+            $table.= "<td><a href='users.php?source=edit_user&user_id={$user_id}'>Edit</a></td>";
+            $table.= "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";
             $table.= "</tr>";
 
             echo $table;
         }
         ?>
         <?php
-//            if(isset($_GET['delete'])) {
-//                $id_comment = $_GET['delete'];
-//
-//                $query = "DELETE FROM comments ";
-//                $query.= "WHERE id = $id_comment";
-//
-//                $delete_comment = mysqli_query($connection, $query);
-//
-//                // I have function for this but i wrote this here just to test my knowledge
-//                if(!$delete_comment) {
-//                    die ('QUERY FAILED: '.mysqli_error($connection));
-//                }
-//
-//                header("Location: comments.php");
-//            }
+            if(isset($_GET['delete'])) {
+                $id_user = $_GET['delete'];
+
+                $query = "DELETE FROM users ";
+                $query.= "WHERE id = {$id_user}";
+
+                $delete_user = mysqli_query($connection, $query);
+
+                handlingMySqlError($delete_user);
+
+                header('Location: users.php');
+            }
+        ?>
+
+        <?php
+            if(isset($_GET['change_role_admin'])) {
+                $user_id = $_GET['change_role_admin'];
+                $role = $_GET['role'];
+                changeUserRoles($user_id, $role);
+            }
+            if (isset($_GET['change_role_sub'])) {
+                $user_id = $_GET['change_role_sub'];
+                $role = $_GET['role'];
+                changeUserRoles($user_id, $role);
+            }
         ?>
         </tbody>
     </table>

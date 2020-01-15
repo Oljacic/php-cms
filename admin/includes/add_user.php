@@ -20,7 +20,8 @@
 
         handlingMySqlError($add_user);
 
-        header("Location: users.php");
+        // header("Location: users.php");
+        echo "User Created " . " " . "<a href='users.php'>View Users</a>";
 
     }
 ?>

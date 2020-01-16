@@ -102,8 +102,18 @@
         <input type="text" class="form-control" name="author" value="<?php echo $post_author; ?>">
     </div>
     <div class="form-group">
-        <label for="status">Post Status</label>
-        <input type="text" class="form-control" name="status" value="<?php echo $post_status; ?>">
+        <label for="status">Chose Status Option</label>
+        <br>
+        <select name="status" id="">
+            <option value='<?php echo $post_status; ?>'><?php echo  ucfirst($post_status); ?></option>
+            <?php 
+                if($post_status == 'published') {
+                    echo "<option value='draft'>Draft</option>";
+                } else {
+                    echo "<option value='published'>Published</option>";
+                }
+            ?>
+        </select>
     </div>
     <div class="form-group">
         <label for="image">Post Image</label>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2020 at 04:35 PM
+-- Generation Time: Jan 16, 2020 at 05:39 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.26
 
@@ -75,7 +75,8 @@ INSERT INTO `comments` (`id`, `post_id`, `author`, `email`, `content`, `status`,
 (8, 1, 'Burek', 'burekcic@buki.com', 'Burekcina', 'approved', '2020-01-11'),
 (9, 1, 'Stef', 'support@setinjo.com', 'Stef', 'approved', '2020-01-11'),
 (10, 1, 'Look', 'luk@look.com', 'Ssdada', 'approved', '2020-01-11'),
-(11, 3, 'What', 'test@test.test', 'dsadad', 'unapproved', '2020-01-11');
+(11, 3, 'What', 'test@test.test', 'dsadad', 'unapproved', '2020-01-11'),
+(12, 1, 'Maya', 'maya@maya.com', 'Maya is the best!', 'unapproved', '2020-01-14');
 
 -- --------------------------------------------------------
 
@@ -101,9 +102,9 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `category_id`, `title`, `author`, `date`, `image`, `content`, `tags`, `comment_count`, `status`) VALUES
-(1, 5, 'Success', 'Stef', '2020-01-05', 'placeholder-success.jpg', 'This content will tell you what to do and what you can get so evreythinh should be ok. ', 'life, success, working on increasing skills', '5', 'published'),
+(1, 5, 'Success', 'Stef', '2020-01-05', 'placeholder-success.jpg', 'This content will tell you what to do and what you can get so evreythinh should be ok. ', 'life, success, working on increasing skills', '6', 'published'),
 (2, 1, 'Test Unit', 'Stef', '2020-01-05', 'placeholder.jpg', 'Some content from greatest programer!', 'PHP, master', '4', 'published'),
-(3, 1, 'Stef', 'Stef', '2020-01-11', 'placeholder.jpg', 'dasdsadasdsad', 'Succees, Life Goals, Habbit', '1', 'draft');
+(3, 1, 'Stef', 'Stef', '2020-01-16', 'placeholder.jpg', 'dasdsadasdsad', 'Succees, Life Goals, Habbit', '1', 'published');
 
 -- --------------------------------------------------------
 
@@ -131,7 +132,9 @@ INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `ema
 (1, 'Miko', '123', 'Miko', 'Mikovic', 'mikovic@mail.com', '', 'subscriber', ''),
 (3, 'Nensi', 'lubav', 'Nena', 'Nena', 'nensi94@test.com', '', 'admin', ''),
 (4, 'test1', 'test1', 'test1', 'test1', 'test1@test.test', '', 'subscriber', ''),
-(7, 'makiss', '123', 'Makas', 'Zvaka', 'maki@maka.com', '', 'admin', '');
+(7, 'makiss', '123', 'Makas', 'Zvaka', 'maki@maka.com', '', 'admin', ''),
+(8, 'ja', 'jaja', 'Ja', 'Ja', 'ja@ja.com', '', 'admin', ''),
+(9, 'create', 'create', 'Creative', 'Creative', 'create@email.com', '', 'admin', '');
 
 --
 -- Indexes for dumped tables
@@ -175,7 +178,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -187,7 +190,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

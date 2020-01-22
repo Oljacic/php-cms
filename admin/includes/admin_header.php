@@ -1,4 +1,4 @@
-}<?php ob_start(); ?>
+<?php ob_start(); ?>
 <?php session_start(); ?>
 <?php
     if(!isset($_SESSION['role'])) {

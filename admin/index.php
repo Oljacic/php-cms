@@ -145,13 +145,25 @@
                 $select_draft_posts = mysqli_query($connection, $query);
                 $number_draft_posts = mysqli_num_rows($select_draft_posts);
 
+                $query = "SELECT * FROM posts WHERE status = 'published'";
+                $select_active_posts = mysqli_query($connection, $query);
+                $number_active_posts = mysqli_num_rows($select_active_posts);
+
                 $query = "SELECT * FROM comments WHERE status = 'unapproved'";
                 $select_unapproved_comm = mysqli_query($connection, $query);
                 $number_unapproved_comm = mysqli_num_rows($select_unapproved_comm);
 
+                $query = "SELECT * FROM comments WHERE status = 'approved'";
+                $select_approved_comm = mysqli_query($connection, $query);
+                $number_approved_comm = mysqli_num_rows($select_approved_comm);
+
                 $query = "SELECT * FROM users WHERE role = 'subscriber'";
                 $select_sub_users = mysqli_query($connection, $query);
                 $number_sub_users = mysqli_num_rows($select_sub_users);
+
+                $query = "SELECT * FROM users WHERE role = 'admin'";
+                $select_admin_users = mysqli_query($connection, $query);
+                $number_admin_users = mysqli_num_rows($select_admin_users);
             ?>
 
             <div class="row">
@@ -165,8 +177,8 @@
                         var data = google.visualization.arrayToDataTable([
                             ['Data', 'Count'],
                             <?php 
-                                $element_text = ['Active Posts', 'Draft Posts', 'Comments', 'Unapproved Comments', 'Users', 'Subscriber Users', 'Categories'];
-                                $element_count = [$count_posts, $number_draft_posts, $count_comments, $number_unapproved_comm, $count_users, $number_sub_users, $count_categories];
+                                $element_text = ['All Posts', 'Active Posts', 'Draft Posts','All Comments', 'Approved Comments', 'Unapproved Comments','All Users', 'Admin Users', 'Subscriber Users', 'Categories'];
+                                $element_count = [$count_posts, $number_active_posts, $number_draft_posts, $count_comments, $number_approved_comm, $number_unapproved_comm, $count_users, $number_admin_users, $number_sub_users, $count_categories];
 
                                 $num_condition = count($element_count);
 

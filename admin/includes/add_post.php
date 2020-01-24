@@ -56,7 +56,12 @@
     </div>
     <div class="form-group">
         <label for="status">Post Status</label>
-        <input type="text" class="form-control" name="status">
+        <br>
+        <select name="status" id="post_status">
+            <option value='draft'>Post Status</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+        </select>
     </div>
     <div class="form-group">
         <label for="image">Post Image</label>

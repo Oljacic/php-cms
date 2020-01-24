@@ -1,7 +1,55 @@
+<?php 
+
+    if(isset($_POST['checboxArray'])) {
+        //checkbox array
+        $ids = $_POST['checboxArray'];
+
+        foreach($ids as $id) {
+            $option = $_POST['bulk_options'];
+            
+            switch($option) {
+                case 'published':
+                    $query = "UPDATE posts  SET status = '$option' ";
+                    $query.= "WHERE id = $id";
+                    $update_publish_post = mysqli_query($connection, $query);
+                    handlingMySqlError($update_publish_post);
+                break;
+                case 'draft':
+                    $query = "UPDATE posts SET status = '$option' ";
+                    $query.= "WHERE id = $id";
+                    $update_draft_post = mysqli_query($connection, $query);
+                    handlingMySqlError($update_draft_post);
+                break;
+                case 'delete':
+                    $query = "DELETE FROM posts ";
+                    $query.= "WHERE id = $id";
+                    $delete_post = mysqli_query($connection, $query);
+                    handlingMySqlError($delete_post);
+            }
+
+        }
+    }
+
+?>
+
+<form action="" method='post'>
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
+        <div id="bulkOptionsContainer" class="col-xs-4">
+            <select class="form-control" name="bulk_options" id="">
+                <option value="">Select Options</option>
+                <option value="published">Publish</option>
+                <option value="draft">Draft</option>
+                <option value="delete">Delete</option>
+            </select>
+        </div>
+        <div class="col-xs-4">
+            <input type="submit" name="submit" class="btn btn-success" value="Apply">
+            <a class="btn btn-primary" href="add_post.php">Add New</a>
+        </div>
         <thead>
         <tr>
+            <th><input id="selectAllBoxes" type="checkbox"></th>
             <th>Id</th>
             <th>Author</th>
             <th>Title</th>
@@ -35,6 +83,7 @@
 
 
                 $table = "<tr>";
+                $table.= "<td><input class='checkboxes' type='checkbox' name='checboxArray[]' value='$post_id'></td>";
                 $table.= "<td>{$post_id}</td>";
                 $table.= "<td>{$post_author}</td>";
                 $table.= "<td>{$post_title}</td>";
@@ -80,3 +129,4 @@
         </tbody>
     </table>
 </div>
+</form>

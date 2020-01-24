@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2020 at 05:39 PM
+-- Generation Time: Jan 24, 2020 at 03:54 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.26
 
@@ -102,9 +102,10 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `category_id`, `title`, `author`, `date`, `image`, `content`, `tags`, `comment_count`, `status`) VALUES
-(1, 5, 'Success', 'Stef', '2020-01-05', 'placeholder-success.jpg', 'This content will tell you what to do and what you can get so evreythinh should be ok. ', 'life, success, working on increasing skills', '6', 'published'),
+(1, 1, 'Success', 'Stef', '2020-01-24', 'placeholder-success.jpg', '<p>This content will tell you what to do and what you can get so evreythinh should be ok.</p>', 'life, success, working on increasing skills', '6', 'draft'),
 (2, 1, 'Test Unit', 'Stef', '2020-01-05', 'placeholder.jpg', 'Some content from greatest programer!', 'PHP, master', '4', 'published'),
-(3, 1, 'Stef', 'Stef', '2020-01-16', 'placeholder.jpg', 'dasdsadasdsad', 'Succees, Life Goals, Habbit', '1', 'published');
+(3, 1, 'Stef', 'Stef', '2020-01-24', 'placeholder.jpg', '<p>dasdsadasdsad</p>', 'Succees, Life Goals, Habbit', '1', 'published'),
+(5, 5, 'Change', 'Changelino', '2020-01-24', 'placeholder.jpg', '<p>Bla bla bla bla bla bla bla bla bla bla</p>', 'Bla', '', 'draft');
 
 -- --------------------------------------------------------
 
@@ -184,7 +185,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`

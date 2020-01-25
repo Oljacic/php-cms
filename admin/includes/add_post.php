@@ -21,6 +21,11 @@
 
         handlingMySqlError($add_post);
 
+        $id = mysqli_insert_id($connection); // this will get from last created item an id
+
+        echo "<p class='bg-success'>Post Created<a href='../post.php?post_id={$id}'> View Post</a> or<a href='posts.php'> View More Posts</a></p>";
+
+
     }
 ?>
 

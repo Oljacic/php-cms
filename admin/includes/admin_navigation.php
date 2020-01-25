@@ -1,3 +1,4 @@
+
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -14,10 +15,17 @@
     <ul class="nav navbar-right top-nav">
         <li><a href="/php-cms">Front Page</a></li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+                <?php
+                    if(isset($_SESSION['username'])) {
+                        echo $_SESSION['username'];
+                    }
+                ?>
+                <b class="caret"></b>
+            </a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    <a href="./profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                 </li>
                 <li class="divider"></li>
                 <li>
@@ -46,7 +54,7 @@
             <li>
                 <a href="./categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="./comments.php"><i class="fa fa-fw fa-file"></i> Comments</a>
             </li>
             <li>

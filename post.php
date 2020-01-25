@@ -42,24 +42,32 @@
                 <!-- Blog Comments -->
                 <?php 
                     if(isset($_POST['create_comment'])) {
+
                         $post_id = $_GET['post_id'];
                         $author = $_POST['author'];
                         $email = $_POST['email'];
                         $comment = $_POST['comment'];
-                        
-                        $query = "INSERT INTO comments (post_id, author, email, content, date) ";
-                        $query.= "VALUES($post_id, '$author', '$email', '$comment', now())";
 
-                        $add_comment = mysqli_query($connection, $query);
+                        if(!empty($author) && !empty($email) && !empty($comment)) {
 
-                        handlingMySqlError($add_comment);
+                            $query = "INSERT INTO comments (post_id, author, email, content, date) ";
+                            $query.= "VALUES($post_id, '$author', '$email', '$comment', now())";
 
-                        $query_count_comment = "UPDATE posts SET comment_count = comment_count + 1 ";
-                        $query_count_comment.= "WHERE id = $post_id";
+                            $add_comment = mysqli_query($connection, $query);
 
-                        $count_comments = mysqli_query($connection, $query_count_comment);
+                            handlingMySqlError($add_comment);
 
-                        header('Location:'.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+                            $query_count_comment = "UPDATE posts SET comment_count = comment_count + 1 ";
+                            $query_count_comment.= "WHERE id = $post_id";
+
+                            $count_comments = mysqli_query($connection, $query_count_comment);
+
+                            header('Location:'.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+
+                        } else {
+                            echo "<script>alert('Fields Can Not Be Empty!!!')</script>";
+                        }
+
                     }
                 ?>
 

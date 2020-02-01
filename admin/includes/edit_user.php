@@ -1,55 +1,63 @@
 <?php
-    $id = '';
-    if(isset($_GET['user_id'])) {
-        $id = $_GET['user_id'];
+$id = '';
+if (isset($_GET['user_id'])) {
+    $id = $_GET['user_id'];
 
-        $query = "SELECT * FROM users ";
-        $query.= "WHERE id = $id";
-        $select_users = mysqli_query($connection, $query);
-        handlingMySqlError($select_users);
+    $query = "SELECT * FROM users ";
+    $query .= "WHERE id = $id";
+    $select_users = mysqli_query($connection, $query);
+    handlingMySqlError($select_users);
 
-        while ($row = mysqli_fetch_assoc($select_users)) {
-            $user_first_name = $row['firstname'];
-            $user_last_name = $row['lastname'];
-            $user_username = $row['username'];
-            $user_password = $row['password'];
-            $user_email = $row['email'];
-            $user_role = $row['role'];
-        }
-
+    while ($row = mysqli_fetch_assoc($select_users)) {
+        $user_first_name = $row['firstname'];
+        $user_last_name = $row['lastname'];
+        $user_username = $row['username'];
+        $user_password = $row['password'];
+        $user_email = $row['email'];
+        $user_role = $row['role'];
     }
+}
 
-    if(isset($_POST['edit_user'])) {
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $username = $_POST['username'];
-        $email = $_POST['email'];
+if (isset($_POST['edit_user'])) {
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
 
     //        $image = $_FILES['image']['name'];
     //        $image_tmp = $_FILES['image']['tmp_name'];
 
-        $password = $_POST['password'];
-        $role = $_POST['role'];
+    $password = $_POST['password'];
+    $role = $_POST['role'];
 
     //        move_uploaded_file($image_tmp, "../images/$image");
 
-        $query = "UPDATE users SET ";
-        $query.= "username = '$username',";
-        $query.= "password = '$password',";
-        $query.= "firstname = '$first_name',";
-        $query.= "lastname = '$last_name',";
-        $query.= "email = '$email',";
-        $query.= "role = '$role' ";
-        $query.= "WHERE id = $id";
+    $get_salt_query = "SELECT rand_salt FROM users";
+    $get_salt = mysqli_query($connection, $get_salt_query);
+
+    handlingMySqlError($get_salt);
+
+    $row = mysqli_fetch_array($get_salt);
+    $salt = $row['rand_salt'];
+
+    $hashed_pass = crypt($password, $salt);
+
+    $query = "UPDATE users SET ";
+    $query .= "username = '$username',";
+    $query .= "password = '$hashed_pass',";
+    $query .= "firstname = '$first_name',";
+    $query .= "lastname = '$last_name',";
+    $query .= "email = '$email',";
+    $query .= "role = '$role' ";
+    $query .= "WHERE id = $id";
 
 
-        $edit_user = mysqli_query($connection, $query);
+    $edit_user = mysqli_query($connection, $query);
 
-        handlingMySqlError($edit_user);
+    handlingMySqlError($edit_user);
 
-        header("Location: users.php");
-
-    }
+    header("Location: users.php");
+}
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -83,11 +91,11 @@
         <select name="role" id="role">
             <option value="<?php echo $user_role; ?>"><?php echo ucfirst($user_role); ?></option>
             <?php
-                if($user_role == 'admin') {
-                    echo "<option value='subscriber'>Subscriber</option>";
-                } elseif ($user_role == 'subscriber') {
-                    echo "<option value='admin'>Admin</option>";
-                }
+            if ($user_role == 'admin') {
+                echo "<option value='subscriber'>Subscriber</option>";
+            } elseif ($user_role == 'subscriber') {
+                echo "<option value='admin'>Admin</option>";
+            }
             ?>
         </select>
     </div>

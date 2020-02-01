@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 24, 2020 at 03:54 PM
+-- Generation Time: Feb 01, 2020 at 11:27 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.26
 
@@ -103,9 +103,7 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`id`, `category_id`, `title`, `author`, `date`, `image`, `content`, `tags`, `comment_count`, `status`) VALUES
 (1, 1, 'Success', 'Stef', '2020-01-24', 'placeholder-success.jpg', '<p>This content will tell you what to do and what you can get so evreythinh should be ok.</p>', 'life, success, working on increasing skills', '6', 'draft'),
-(2, 1, 'Test Unit', 'Stef', '2020-01-05', 'placeholder.jpg', 'Some content from greatest programer!', 'PHP, master', '4', 'published'),
-(3, 1, 'Stef', 'Stef', '2020-01-24', 'placeholder.jpg', '<p>dasdsadasdsad</p>', 'Succees, Life Goals, Habbit', '1', 'published'),
-(5, 5, 'Change', 'Changelino', '2020-01-24', 'placeholder.jpg', '<p>Bla bla bla bla bla bla bla bla bla bla</p>', 'Bla', '', 'draft');
+(2, 1, 'Test Unit', 'Stef', '2020-01-05', 'placeholder.jpg', 'Some content from greatest programer!', 'PHP, master', '4', 'published');
 
 -- --------------------------------------------------------
 
@@ -122,7 +120,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `user_image` text NOT NULL,
   `role` varchar(255) NOT NULL DEFAULT 'admin',
-  `rand_salt` varchar(255) NOT NULL
+  `rand_salt` varchar(255) NOT NULL DEFAULT '$2y$10$iusesomecrazystrings22'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -135,7 +133,13 @@ INSERT INTO `users` (`id`, `username`, `password`, `firstname`, `lastname`, `ema
 (4, 'test1', 'test1', 'test1', 'test1', 'test1@test.test', '', 'subscriber', ''),
 (7, 'makiss', '123', 'Makas', 'Zvaka', 'maki@maka.com', '', 'admin', ''),
 (8, 'ja', 'jaja', 'Ja', 'Ja', 'ja@ja.com', '', 'admin', ''),
-(9, 'create', 'create', 'Creative', 'Creative', 'create@email.com', '', 'admin', '');
+(9, 'create', 'create', 'Creative', 'Creative', 'create@email.com', '', 'admin', ''),
+(10, 'han', 'han123', 'Han', 'Han', 'han@test.com', '', 'admin', '$2y$10$iusesomecrazystring22'),
+(11, 'Dzoni', 'dzoni123', '', '', 'dzoni@test.com', '', 'subscriber', '$2y$10$iusesomecrazystring22'),
+(12, 'peop', 'pepo123', '', '', 'pepo@test.com', '', 'subscriber', '$2y$10$iusesomecrazystring22'),
+(13, 'peop', 'pepo123', '', '', 'pepo@test.com', '', 'subscriber', '$2y$10$iusesomecrazystring22'),
+(14, 'Suave', 'bla', '', '', 'rico@test.com', '', 'subscriber', '$2y$10$iusesomecrazystring22'),
+(15, 'Mala', '$1$oo2dulbM$EaLNukqNpr8IGQ.oJOAvU.', '', '', 'mala@test.com', '', 'subscriber', '$2y$10$iusesomecrazystrings22');
 
 --
 -- Indexes for dumped tables
@@ -185,13 +189,13 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

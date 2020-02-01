@@ -48,9 +48,19 @@ if (isset($_SESSION['username'])) {
 
                         //        move_uploaded_file($image_tmp, "../images/$image");
 
+                        $get_salt_query = "SELECT rand_salt FROM users";
+                        $get_salt = mysqli_query($connection, $get_salt_query);
+                    
+                        handlingMySqlError($get_salt);
+                    
+                        $row = mysqli_fetch_array($get_salt);
+                        $salt = $row['rand_salt'];
+
+                        $hashed_pass = crypt($password, $salt);
+
                         $query = "UPDATE users SET ";
                         $query .= "username = '$username',";
-                        $query .= "password = '$password',";
+                        $query .= "password = '$hashed_pass',";
                         $query .= "firstname = '$first_name',";
                         $query .= "lastname = '$last_name',";
                         $query .= "email = '$email',";

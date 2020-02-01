@@ -109,7 +109,7 @@
                 $table.= "<td>{$post_date}</td>";
                 $table.= "<td><a href='../post.php?post_id={$post_id}'>View Front Page</a></td>";
                 $table.= "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-                $table.= "<td><a href='posts.php?delete_post={$post_id}'>Delete</a></td>";
+                $table.= "<td><a onclick=\"javascript: return window.confirm('Are you sure you want to delete post: {$post_title}?');\" href='posts.php?delete_post={$post_id}'>Delete</a></td>";
                 $table.= "</tr>";
 
                 echo $table;

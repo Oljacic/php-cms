@@ -7,17 +7,30 @@
         $email    = $_POST['email'];
         $pass     = $_POST['password'];
 
-        $username = mysqli_real_escape_string($connection, $username);
-        $email    = mysqli_real_escape_string($connection, $email);
-        $pass     = mysqli_real_escape_string($connection, $pass);
+        if(!empty($username) && !empty($email) && !empty($pass)) {
+            $username = mysqli_real_escape_string($connection, $username);
+            $email    = mysqli_real_escape_string($connection, $email);
+            $pass     = mysqli_real_escape_string($connection, $pass);
+    
+            $get_salt_query = "SELECT rand_salt FROM users";
+            $get_salt = mysqli_query($connection, $get_salt_query);
+    
+            handlingMySqlError($get_salt);
+    
+            $row = mysqli_fetch_array($get_salt);
+            $salt = $row['rand_salt'];
+    
+            $query = "INSERT INTO users (username, email, password, role) ";
+            $query.= "VALUES ('{$username}', '{$email}', '{$pass}', 'subscriber')";
+            $register_user = mysqli_query($connection, $query);
+    
+            if(!$register_user) {
+                die('QUERY FAILED '.mysqli_error($connection).' '.mysqli_errno($connection));
+            }
 
-        $get_salt_query = "SELECT rand_salt FROM users";
-        $get_salt = mysqli_query($connection, $get_salt_query);
-
-        handlingMySqlError($get_salt);
-
-        while($row = mysqli_fetch_array($get_salt)) {
-            print_r($row['rand_salt']);
+            $message = "<span class='text-success'><strong>Your Registration has been submited</strong></span>";
+        } else {
+            $message = "<span class='text-warning'><strong>Fields can not be empty!</strong></span>";
         }
 
     }
@@ -37,6 +50,7 @@
                     <div class="form-wrap">
                         <h1>Register</h1>
                         <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
+                            <h5 class="text-center"><?php echo isset($message) ? $message : '' ?></h6>
                             <div class="form-group">
                                 <label for="username" class="sr-only">username</label>
                                 <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">

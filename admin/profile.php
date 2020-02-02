@@ -17,6 +17,8 @@ if (isset($_SESSION['username'])) {
         $user_email = $row['email'];
         $user_role = $row['role'];
     }
+    
+    var_dump($user_password);
 }
 ?>
 
@@ -56,7 +58,7 @@ if (isset($_SESSION['username'])) {
                         $row = mysqli_fetch_array($get_salt);
                         $salt = $row['rand_salt'];
 
-                        $hashed_pass = crypt($password, $salt);
+                        $hashed_pass = crypt($password, $salt);    
 
                         $query = "UPDATE users SET ";
                         $query .= "username = '$username',";

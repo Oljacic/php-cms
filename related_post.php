@@ -29,7 +29,7 @@
                         </a>
                     </h2>
                     <p class="lead">by 
-                        <a href="related_post.php?user=admin"><?php echo $post_author; ?></a>
+                        <a href="index.php"><?php echo $post_author; ?></a>
                     </p>
                     <p>
                         <span class="glyphicon glyphicon-time"></span>

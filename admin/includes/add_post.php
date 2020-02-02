@@ -57,7 +57,11 @@
     </div>
     <div class="form-group">
         <label for="author">Post Author</label>
-        <input type="text" class="form-control" name="author">
+        <?php 
+            var_dump($_SESSION);
+            exit;
+        ?>
+        <input type="text" class="form-control" name="author" value="Mala">
     </div>
     <div class="form-group">
         <label for="status">Post Status</label>

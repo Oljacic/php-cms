@@ -105,14 +105,7 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="form-group">
         <label for="author">Post Author</label>
-        <?php 
-            
-            if(isset($_SESSION['username']) && $_SESSION['username'] != '') {
-                $username  = $_SESSION['username'];
-                echo "<input readonly type='text' class='form-control' name='author' value='{$username}'>";
-            }
-
-        ?>
+        <input readonly type="text" class="form-control" name="author" value="<?php echo $post_author; ?>">
     </div>
     <div class="form-group">
         <label for="status">Chose Status Option</label>

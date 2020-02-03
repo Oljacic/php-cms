@@ -1,7 +1,8 @@
-<?php include "includes/admin_header.php" ?>
+<?php 
 
+include "includes/admin_header.php";
+include "includes/function.php";
 
-<?php
 if (isset($_SESSION['username'])) {
     $username_ses = $_SESSION['username'];
 
@@ -17,8 +18,7 @@ if (isset($_SESSION['username'])) {
         $user_email = $row['email'];
         $user_role = $row['role'];
     }
-    
-    var_dump($user_password);
+
 }
 ?>
 
@@ -41,40 +41,44 @@ if (isset($_SESSION['username'])) {
                         $last_name = $_POST['last_name'];
                         $username = $_POST['username'];
                         $email = $_POST['email'];
-
-                        //        $image = $_FILES['image']['name'];
-                        //        $image_tmp = $_FILES['image']['tmp_name'];
-
                         $password = $_POST['password'];
-                        $role = $_POST['role'];
 
-                        //        move_uploaded_file($image_tmp, "../images/$image");
-
-                        $get_salt_query = "SELECT rand_salt FROM users";
-                        $get_salt = mysqli_query($connection, $get_salt_query);
+                        if(!empty($password)) {
+                            $query_password = "SELECT password FROM users ";
+                            $query_password .= "WHERE username = '$username_ses'";
                     
-                        handlingMySqlError($get_salt);
+                            $get_user = mysqli_query($connection, $query_password);
                     
-                        $row = mysqli_fetch_array($get_salt);
-                        $salt = $row['rand_salt'];
+                            handlingMySqlError($get_user);
+                    
+                            $row = mysqli_fetch_array($get_user);
+                    
+                            $db_user_password = $row['password'];
+                    
+                    
+                            if ($db_user_password != $password) {
+                                $hashed_pass = password_hash($password, PASSWORD_BCRYPT, array(
+                                    'cost' => 12
+                                ));
+                            }
 
-                        $hashed_pass = crypt($password, $salt);    
+                            $query = "UPDATE users SET ";
+                            $query .= "username = '$username',";
+                            $query .= "password = '$hashed_pass',";
+                            $query .= "firstname = '$first_name',";
+                            $query .= "lastname = '$last_name',";
+                            $query .= "email = '$email' ";
+                            $query .= "WHERE username = '$username_ses'";
+    
+    
+                            $edit_user = mysqli_query($connection, $query);
+    
+                            handlingMySqlError($edit_user);
 
-                        $query = "UPDATE users SET ";
-                        $query .= "username = '$username',";
-                        $query .= "password = '$hashed_pass',";
-                        $query .= "firstname = '$first_name',";
-                        $query .= "lastname = '$last_name',";
-                        $query .= "email = '$email',";
-                        $query .= "role = '$role' ";
-                        $query .= "WHERE username = '$username_ses'";
-
-
-                        $edit_user = mysqli_query($connection, $query);
-
-                        handlingMySqlError($edit_user);
-
-                        header("Location: profile.php");
+                            restartSes($username, $hashed_pass, $first_name, $last_name);
+    
+                            header("Location: profile.php");
+                        }
                     }
                     ?>
 
@@ -95,27 +99,9 @@ if (isset($_SESSION['username'])) {
                             <label for="email">Edit Email</label>
                             <input type="text" class="form-control" name="email" value="<?php echo $user_email; ?>">
                         </div>
-                        <!--    <div class="form-group">-->
-                        <!--        <label for="user_image">Add Image</label>-->
-                        <!--        <input type="file" name="user_image">-->
-                        <!--    </div>-->
                         <div class="form-group">
                             <label for="password">Edit Password</label>
-                            <input type="password" class="form-control" name="password" value="<?php echo $user_password; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="role">Chose Role</label>
-                            <br>
-                            <select name="role" id="role">
-                                <option value="<?php echo $user_role; ?>"><?php echo ucfirst($user_role); ?></option>
-                                <?php
-                                if ($user_role == 'admin') {
-                                    echo "<option value='subscriber'>Subscriber</option>";
-                                } elseif ($user_role == 'subscriber') {
-                                    echo "<option value='admin'>Admin</option>";
-                                }
-                                ?>
-                            </select>
+                            <input type="password" class="form-control" name="password" autocomplete="off">
                         </div>
                         <div class="form-group">
                             <input class="btn btn-primary" type="submit" name="edit_user" value="Update Profile">

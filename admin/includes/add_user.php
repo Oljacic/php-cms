@@ -11,6 +11,10 @@
         $password = $_POST['password'];
         $role = $_POST['role'];
 
+        $password = password_hash($password, PASSWORD_BCRYPT, array(
+            'cost' => 12,
+        ));
+
 //        move_uploaded_file($image_tmp, "../images/$image");
 
         $query = "INSERT INTO users (username, password, firstname, lastname, email, role) ";

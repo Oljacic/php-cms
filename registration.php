@@ -12,15 +12,9 @@
             $email    = mysqli_real_escape_string($connection, $email);
             $pass     = mysqli_real_escape_string($connection, $pass);
     
-            $get_salt_query = "SELECT rand_salt FROM users";
-            $get_salt = mysqli_query($connection, $get_salt_query);
-    
-            handlingMySqlError($get_salt);
-    
-            $row = mysqli_fetch_array($get_salt);
-            $salt = $row['rand_salt'];
-
-            $pass = crypt($pass, $salt);
+            $pass = password_hash($pass, PASSWORD_BCRYPT, array(
+                'cost' => 12
+            ));
     
             $query = "INSERT INTO users (username, email, password, role) ";
             $query.= "VALUES ('{$username}', '{$email}', '{$pass}', 'subscriber')";

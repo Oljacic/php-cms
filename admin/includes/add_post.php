@@ -10,12 +10,12 @@
 
         $tags = $_POST['tags'];
         $content = $_POST['content'];
-        $date = date('d-m-y');
+        $date = time();
 
         move_uploaded_file($image_tmp, "../images/$image");
 
         $query = "INSERT INTO posts (category_id, title, author, date, image, content, tags, status) ";
-        $query.= "VALUES({$category_id},'{$title}','{$author}',now(),'{$image}','{$content}','{$tags}','{$status}')";
+        $query.= "VALUES({$category_id},'{$title}','{$author}','{$date}','{$image}','{$content}','{$tags}','{$status}')";
 
         $add_post = mysqli_query($connection, $query);
 
@@ -58,10 +58,13 @@
     <div class="form-group">
         <label for="author">Post Author</label>
         <?php 
-            var_dump($_SESSION);
-            exit;
+            
+            if(isset($_SESSION['username']) && $_SESSION['username'] != '') {
+                $username  = $_SESSION['username'];
+                echo "<input readonly type='text' class='form-control' name='author' value='{$username}'>";
+            }
+
         ?>
-        <input type="text" class="form-control" name="author" value="Mala">
     </div>
     <div class="form-group">
         <label for="status">Post Status</label>

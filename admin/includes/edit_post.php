@@ -38,6 +38,7 @@ if (isset($_POST['submit'])) {
 
     $tags = $_POST['tags'];
     $content = $_POST['content'];
+    $date = time();
 
     move_uploaded_file($image_tmp, "../images/$image");
 
@@ -53,7 +54,7 @@ if (isset($_POST['submit'])) {
     $query = "UPDATE posts SET ";
     $query .= "title = '{$title}', ";
     $query .= "category_id = {$category_id}, ";
-    $query .= "date = now(), ";
+    $query .= "date = '{$date}', ";
     $query .= "author = '{$author}', ";
     $query .= "status = '{$status}', ";
     $query .= "tags = '{$tags}', ";
@@ -104,7 +105,14 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="form-group">
         <label for="author">Post Author</label>
-        <input type="text" class="form-control" name="author" value="<?php echo $post_author; ?>">
+        <?php 
+            
+            if(isset($_SESSION['username']) && $_SESSION['username'] != '') {
+                $username  = $_SESSION['username'];
+                echo "<input readonly type='text' class='form-control' name='author' value='{$username}'>";
+            }
+
+        ?>
     </div>
     <div class="form-group">
         <label for="status">Chose Status Option</label>

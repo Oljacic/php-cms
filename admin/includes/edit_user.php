@@ -1,4 +1,7 @@
 <?php
+
+include 'function.php';
+
 $id = '';
 if (isset($_GET['user_id'])) {
     $id = $_GET['user_id'];
@@ -32,31 +35,45 @@ if (isset($_POST['edit_user'])) {
 
     //        move_uploaded_file($image_tmp, "../images/$image");
 
-    $get_salt_query = "SELECT rand_salt FROM users";
-    $get_salt = mysqli_query($connection, $get_salt_query);
+    if (!empty($password)) {
+        $query_password = "SELECT password FROM users ";
+        $query_password .= " WHERE id = {$id}";
 
-    handlingMySqlError($get_salt);
+        $get_user = mysqli_query($connection, $query_password);
 
-    $row = mysqli_fetch_array($get_salt);
-    $salt = $row['rand_salt'];
+        handlingMySqlError($get_user);
 
-    $hashed_pass = crypt($password, $salt);
+        $row = mysqli_fetch_array($get_user);
 
-    $query = "UPDATE users SET ";
-    $query .= "username = '$username',";
-    $query .= "password = '$hashed_pass',";
-    $query .= "firstname = '$first_name',";
-    $query .= "lastname = '$last_name',";
-    $query .= "email = '$email',";
-    $query .= "role = '$role' ";
-    $query .= "WHERE id = $id";
+        $db_user_password = $row['password'];
 
 
-    $edit_user = mysqli_query($connection, $query);
+        if ($db_user_password != $password) {
+            $hash_password = password_hash($password, PASSWORD_BCRYPT, array(
+                'cost' => 12
+            ));
+        }
 
-    handlingMySqlError($edit_user);
+        $query = "UPDATE users SET ";
+        $query .= "username = '$username',";
+        $query .= "password = '$hash_password',";
+        $query .= "firstname = '$first_name',";
+        $query .= "lastname = '$last_name',";
+        $query .= "email = '$email',";
+        $query .= "role = '$role' ";
+        $query .= "WHERE id = $id";
 
-    header("Location: users.php");
+
+        $edit_user = mysqli_query($connection, $query);
+
+        handlingMySqlError($edit_user);
+        
+        restartSes($username, $hash_password, $first_name, $last_name);
+
+        header("Location: users.php");
+    }
+} else {
+    header("Location: index.php");
 }
 ?>
 
@@ -83,7 +100,7 @@ if (isset($_POST['edit_user'])) {
     <!--    </div>-->
     <div class="form-group">
         <label for="password">Edit Password</label>
-        <input type="password" class="form-control" name="password" value="<?php echo $user_password; ?>">
+        <input type="password" class="form-control" name="password" autocomplete="off" ?>">
     </div>
     <div class="form-group">
         <label for="role">Chose Role</label>

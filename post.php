@@ -23,13 +23,13 @@
                 while ($row = mysqli_fetch_assoc($select_post)) :
                     $post_title = $row['title'];
                     $post_author = $row['author'];
-                    $post_date = $row['date'];
+                    $post_date = date('d-M-Y H:i:s',$row['date']);
                     $post_image = $row['image'];
                     $post_content = $row['content'];
             ?>
                  <!-- First Blog Post -->
                 <h2><a href="#"><?php echo $post_title; ?></a></h2>
-                <p class="lead">by <a href="index.php"><?php echo $post_author; ?></a></p>
+                <p class="lead">by <a href="related_post.php?user=<?php echo $post_author; ?>"><?php echo $post_author; ?></a></p>
                 <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; // Posted on August 28, 2013 at 10:00 PM ?></p>
                 <hr>
                 <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">

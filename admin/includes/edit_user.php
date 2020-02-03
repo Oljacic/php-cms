@@ -72,8 +72,6 @@ if (isset($_POST['edit_user'])) {
 
         header("Location: users.php");
     }
-} else {
-    header("Location: index.php");
 }
 ?>
 
@@ -100,7 +98,7 @@ if (isset($_POST['edit_user'])) {
     <!--    </div>-->
     <div class="form-group">
         <label for="password">Edit Password</label>
-        <input type="password" class="form-control" name="password" autocomplete="off" ?>">
+        <input type="password" class="form-control" name="password" autocomplete="off">
     </div>
     <div class="form-group">
         <label for="role">Chose Role</label>

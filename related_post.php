@@ -7,16 +7,25 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8">
-            <h1 class="page-header">Page Heading<small>Secondary Text</small></h1>
-            <?php
+        <?php
+            $username = '';  
+
+            if(isset($_GET['user'])) {
+                $username = $_GET['user'];
+            }
+        ?>
+        <h1 class="page-header">Author related post <small><?php echo $username; ?></small></h1>
+          <?php 
                 $query = "SELECT * FROM posts ";
+                $query.= "WHERE author = '$username' ";
+                $query.= "ORDER BY date DESC";
                 $select_all_posts = mysqli_query($connection, $query);
 
                 while ($row = mysqli_fetch_assoc($select_all_posts)) :
                     $post_id = $row['id'];
                     $post_title = $row['title'];
                     $post_author = $row['author'];
-                    $post_date = $row['date'];
+                    $post_date =  date('d-M-Y H:i:s',$row['date']);
                     $post_image = $row['image'];
                     $post_content = substr($row['content'], 0, 100);
                     $post_status = $row['status'];
@@ -28,9 +37,6 @@
                             <?php echo $post_title; ?>
                         </a>
                     </h2>
-                    <p class="lead">by 
-                        <a href="index.php"><?php echo $post_author; ?></a>
-                    </p>
                     <p>
                         <span class="glyphicon glyphicon-time"></span>
                         <?php echo $post_date; // Posted on August 28, 2013 at 10:00 PM ?>

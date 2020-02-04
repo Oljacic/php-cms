@@ -25,6 +25,38 @@
                     $query.= "WHERE id = $id";
                     $delete_post = mysqli_query($connection, $query);
                     handlingMySqlError($delete_post);
+                break;
+                case 'clone': 
+                    $query = "SELECT * FROM posts ";
+                    $query.= "WHERE id = $id";
+                    $clone_post = mysqli_query($connection, $query);
+                    handlingMySqlError($clone_post);
+
+                    while($row = mysqli_fetch_array($clone_post)) {
+                        $post_category_id = $row['category_id'];
+                        $post_title = $row['title'];
+                        $post_author = $row['author'];
+                        $post_date =   $row['date'];
+                        $post_image = $row['image'];
+                        $post_content = $row['content'];
+                        $post_tags = $row['tags'];
+                        $post_status = $row['status'];
+                    }
+
+                    $query = "INSERT INTO posts (category_id, title, author, date, image, content, tags, status) ";
+                    $query.= "VALUES({$post_category_id},'{$post_title}','{$post_author}','{$post_date}','{$post_image}','{$post_content}','{$post_tags}','{$post_status}')";
+
+                    $clone_query = mysqli_query($connection, $query);
+
+                    if(!$clone_query) {
+                        die('MYSQL FAILED'. mysqli_error($connection));
+                    }
+
+                    header('Location:'.$_SERVER['PHP_SELF']);
+
+                break;
+
+
             }
 
         }
@@ -41,6 +73,7 @@
                 <option value="published">Publish</option>
                 <option value="draft">Draft</option>
                 <option value="delete">Delete</option>
+                <option value="clone">Clone</option>
             </select>
         </div>
         <div class="col-xs-4">
@@ -63,11 +96,13 @@
             <th>Front Page</th>
             <th>Edit</th>
             <th>Delete</th>
+            <th>View Numbers</th>
         </tr>
         </thead>
         <tbody>
         <?php
-            $query = "SELECT * FROM posts";
+            $query = "SELECT * FROM posts ";
+            $query.= "ORDER BY id DESC";
             $select_all_posts = mysqli_query($connection, $query);
 
             while ($row = mysqli_fetch_assoc($select_all_posts)) {
@@ -80,7 +115,8 @@
                 $post_image = $row['image'];
                 $post_tags = $row['tags'];
                 $post_comment_count = $row['comment_count'];
-                $post_date = $row['date'];
+                $post_date =  date('d-M-Y H:i:s', $row['date']);
+                $post_view_count = $row['view_count'];
 
 
                 $table = "<tr>";
@@ -110,6 +146,7 @@
                 $table.= "<td><a href='../post.php?post_id={$post_id}'>View Front Page</a></td>";
                 $table.= "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
                 $table.= "<td><a onclick=\"javascript: return window.confirm('Are you sure you want to delete post: {$post_title}?');\" href='posts.php?delete_post={$post_id}'>Delete</a></td>";
+                $table.= "<td><a href='posts.php?reset={$post_id}'>{$post_view_count}</a></td>";
                 $table.= "</tr>";
 
                 echo $table;
@@ -122,6 +159,18 @@
 
                 $query = "DELETE FROM posts ";
                 $query.= "WHERE id = {$id_ready_for_delete}";
+
+                mysqli_query($connection, $query);
+
+                header("Location: posts.php");
+            }
+
+            if(isset($_GET['reset'])) {
+
+                $reset = $_GET['reset'];
+
+                $query = "UPDATE posts SET view_count = 0 ";
+                $query.= "WHERE id =".mysqli_real_escape_string($connection, $reset)."";
 
                 mysqli_query($connection, $query);
 

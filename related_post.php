@@ -7,30 +7,30 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8">
-        <?php
-            $username = '';  
+            <?php
+            $username = '';
 
-            if(isset($_GET['user'])) {
+            if (isset($_GET['user'])) {
                 $username = $_GET['user'];
             }
-        ?>
-        <h1 class="page-header">Author related post <small><?php echo $username; ?></small></h1>
-          <?php 
-                $query = "SELECT * FROM posts ";
-                $query.= "WHERE author = '$username' ";
-                $query.= "ORDER BY date DESC";
-                $select_all_posts = mysqli_query($connection, $query);
-
-                while ($row = mysqli_fetch_assoc($select_all_posts)) :
-                    $post_id = $row['id'];
-                    $post_title = $row['title'];
-                    $post_author = $row['author'];
-                    $post_date =  date('d-M-Y H:i:s',$row['date']);
-                    $post_image = $row['image'];
-                    $post_content = substr($row['content'], 0, 100);
-                    $post_status = $row['status'];
             ?>
-                <?php if($post_status == 'published') : ?>
+            <h1 class="page-header">Author related post <small><?php echo $username; ?></small></h1>
+            <?php
+            $query = "SELECT * FROM posts ";
+            $query .= "WHERE author = '$username' ";
+            $query .= "ORDER BY date DESC";
+            $select_all_posts = mysqli_query($connection, $query);
+
+            while ($row = mysqli_fetch_assoc($select_all_posts)) :
+                $post_id = $row['id'];
+                $post_title = $row['title'];
+                $post_author = $row['author'];
+                $post_date =  date('d-M-Y H:i:s', $row['date']);
+                $post_image = $row['image'];
+                $post_content = substr($row['content'], 0, 100);
+                $post_status = $row['status'];
+            ?>
+                <?php if ($post_status == 'published') : ?>
                     <!-- First Blog Post -->
                     <h2>
                         <a href="post.php?post_id=<?php echo $post_id; ?>">
@@ -39,7 +39,8 @@
                     </h2>
                     <p>
                         <span class="glyphicon glyphicon-time"></span>
-                        <?php echo $post_date; // Posted on August 28, 2013 at 10:00 PM ?>
+                        <?php echo $post_date; // Posted on August 28, 2013 at 10:00 PM 
+                        ?>
                     </p>
                     <hr>
                     <a href="post.php?post_id=<?php echo $post_id; ?>">
@@ -53,9 +54,9 @@
             <?php endwhile; ?>
         </div>
         <!-- Blog Sidebar Widgets Column -->
-        <?php include "includes/sidebar.php"?>
+        <?php include "includes/sidebar.php" ?>
     </div>
     <!-- /.row -->
     <hr>
-<!-- Footer -->
-<?php include "includes/footer.php"; ?>
+    <!-- Footer -->
+    <?php include "includes/footer.php"; ?>

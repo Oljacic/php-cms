@@ -161,7 +161,14 @@ if (isset($_POST['checboxArray'])) {
                     $table .= "<td>{$post_status}</td>";
                     $table .= "<td><img width='100' src='../images/{$post_image}'></td>";
                     $table .= "<td>{$post_tags}</td>";
-                    $table .= "<td>{$post_comment_count}</td>";
+
+                    $query = "SELECT * FROM comments ";
+                    $query.= "WHERE post_id = {$post_id}";
+                    $exec_query_comments = mysqli_query($connection, $query);
+                    $count_comm = mysqli_num_rows($exec_query_comments);
+
+                    $table .= "<td><a href='comments.php?comm_post_id={$post_id}'>{$count_comm}<a></td>";
+
                     $table .= "<td>{$post_date}</td>";
                     $table .= "<td><a href='../post.php?post_id={$post_id}'>View Front Page</a></td>";
                     $table .= "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";

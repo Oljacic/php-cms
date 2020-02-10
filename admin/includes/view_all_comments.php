@@ -16,8 +16,17 @@
         </thead>
         <tbody>
         <?php
-            $query = "SELECT * FROM comments";
-            $select_comments = mysqli_query($connection, $query);
+
+            if(isset($_GET['comm_post_id'])) {
+                $post_id = $_GET['comm_post_id'];
+
+                $query = "SELECT * FROM comments ";
+                $query.= "WHERE post_id =".mysqli_real_escape_string($connection, $post_id)."";
+                $select_comments = mysqli_query($connection, $query);
+            } else {
+                $query = "SELECT * FROM comments";
+                $select_comments = mysqli_query($connection, $query);
+            }
 
             while ($row = mysqli_fetch_assoc($select_comments)) {
                 $comment_id = $row['id'];
@@ -68,7 +77,13 @@
                 $table.= "<td>{$comment_date}</td>";
                 $table.= "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
                 $table.= "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
-                $table.= "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
+
+                if(isset($_GET['comm_post_id'])) {
+                    $table.= "<td><a href='comments.php?delete={$comment_id}&comm_post_id={$post_id}'>Delete</a></td>";
+                } else {
+                    $table.= "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
+                }
+
                 $table.= "</tr>";
 
                 echo $table;
@@ -88,7 +103,11 @@
                     die ('QUERY FAILED: '.mysqli_error($connection));
                 }
 
-                header("Location: comments.php");
+                if(isset($_GET['comm_post_id'])) {
+                    header('Location:' . $_SERVER['PHP_SELF'].'?comm_post_id='.$post_id.'');
+                } else {
+                    header("Location: comments.php");
+                }
             }
         ?>
 

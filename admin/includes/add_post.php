@@ -35,7 +35,7 @@
         <input type="text" class="form-control" name="title">
     </div>
     <div class="form-group">
-        <label for="category_id">Post Category Id</label>
+        <label for="category_id">Post Category</label>
         <br>
         <select name="post_category" id="post_category">
             <?php
@@ -50,6 +50,27 @@
                     $category_title = $row['category_title'];
 
                     echo "<option value=\"$category_id\">$category_title</option>";
+
+                }
+            ?>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="users">Users</label>
+        <br>
+        <select name="users" id="users">
+            <?php
+                $query = "SELECT * FROM users";
+
+                $select_users = mysqli_query($connection, $query);
+
+                handlingMySqlError($select_users);
+
+                while ($row = mysqli_fetch_assoc($select_users)) {
+                    $user_id = $row['id'];
+                    $username = $row['username'];
+                    
+                    echo "<option value=\"$user_id\">$username</option>";
 
                 }
             ?>
